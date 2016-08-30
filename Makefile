@@ -27,11 +27,11 @@ all: clean cc ld
 
 cc:
 	@echo Compiling $(CPPFILES) 
-	$(CC) $(CFLAGS) $(foreach d, $(INCLUDE_DIR), -I$d) -c $(CPPFILES)
+	@$(CC) $(CFLAGS) $(foreach d, $(INCLUDE_DIR), -I$d) -c $(CPPFILES)
 
 ld:
 	@echo Linking...
-	$(LD) $(foreach d, $(LIBRARY_DIR), -L$d) $(LDFLAGS) -o $(NAME) *.o $(LIBS)
+	@$(LD) $(foreach d, $(LIBRARY_DIR), -L$d) $(LDFLAGS) -o $(NAME) *.o $(LIBS)
 
 clean:
 	@echo Deleting all object files...
