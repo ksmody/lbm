@@ -7,14 +7,14 @@ CC=g++
 LD=g++
 # We will use gcc (instead of ld) to link our object files together because it automatically discovers appropriate linking flags
 # Flags/Options
-CFLAGS=-std=c++11 -O3 -funroll-loops -ftree-vectorize
+CFLAGS=-std=c++11 -O3 -funroll-loops -ftree-vectorize -Wno-deprecated
 LDFLAGS=-fopenmp -Wl,-R -Wl,build
-LIBS=-lpugixml -lboost_mpi -lboost_program_options -lboost_filesystem -lboost_system -lvtkIO -lvtkFiltering -lvtkCommon -lvtkCharts  -lvtkCommon  -lvtkDICOMParser  -lvtkexoIIc  -lvtkexpat  -lvtkFiltering  -lvtkfreetype  -lvtkftgl  -lvtkGenericFiltering  -lvtkGeovis  -lvtkGraphics  -lvtkhdf5  -lvtkhdf5_hl  -lvtkHybrid  -lvtkImaging  -lvtkInfovis  -lvtkIO  -lvtkjpeg  -lvtkmetaio  -lvtkNetCDF  -lvtkpng  -lvtkproj4  -lvtkRendering  -lvtksqlite  -lvtksys  -lvtktiff  -lvtkverdict  -lvtkViews  -lvtkVolumeRendering  -lvtkWidgets -lvtkzlib
+LIBS=-lpugixml -lboost_mpi -lboost_program_options -lboost_filesystem -lboost_system -lvtkIO -lvtkFiltering -lvtkCommon -lvtkCharts  -lvtkCommon  -lvtkDICOMParser  -lvtkexoIIc  -lvtkFiltering  -lvtkftgl  -lvtkGenericFiltering  -lvtkGeovis  -lvtkGraphics  -lvtkHybrid  -lvtkImaging  -lvtkInfovis  -lvtkmetaio  -lvtkproj4  -lvtkRendering  -lvtksys  -lvtkverdict  -lvtkViews  -lvtkVolumeRendering  -lvtkWidgets 
 
 BOOST_INC_LOCATION=$(TACC_BOOST_MPI_INCLUDE) /home1/03822/malchera/boost/boost_1_55_0/libs/include
 BOOST_LIB_LOCATION=$(TACC_BOOST_MPI_LIB) /home1/03822/malchera/boost/boost_1_55_0/libs/lib
-VTK_INC_LOCATION=./include/vtk-5.10
-VTK_LIB_LOCATION=./lib/vtk-5.10
+VTK_INC_LOCATION=/usr/include/vtk-5.8
+VTK_LIB_LOCATION==/usr/lib/vtk-5.8
 
 #######################################################
 
@@ -26,10 +26,8 @@ all: clean cc ld
 	@echo Done!
 
 cc:
-	@$(foreach file, $(CPPFILES),\
-		echo Compiling $(file)...;\
-		$(CC) $(CFLAGS) $(foreach d, $(INCLUDE_DIR), -I$d) -c $(CPPFILES)\
-		;)
+	@echo Compiling $(CPPFILES) 
+	$(CC) $(CFLAGS) $(foreach d, $(INCLUDE_DIR), -I$d) -c $(CPPFILES)
 
 ld:
 	@echo Linking...
